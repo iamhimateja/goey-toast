@@ -334,6 +334,7 @@ function App() {
                 <li>Progress countdown bar with <code>showProgress</code> prop and hover pause</li>
                 <li>Re-expand on hover after progress bar completes with animation reset</li>
                 <li>Timestamp display on toasts (local time with seconds)</li>
+                <li>Timestamp visibility toggle via <code>showTimestamp</code> (default true)</li>
                 <li>Max queue overflow control: <code>maxQueue</code> and <code>queueOverflow</code> props</li>
                 <li><code>onDismiss</code> and <code>onAutoClose</code> callback support</li>
                 <li>Softer collapse bounce to prevent text clipping</li>

@@ -152,6 +152,7 @@ function GooeyToastWrapper({
   spring,
   bounce,
   showProgress,
+  showTimestamp: initialShowTimestamp,
   toastId,
   activeId,
   onDismiss,
@@ -172,6 +173,7 @@ function GooeyToastWrapper({
   spring?: boolean
   bounce?: number
   showProgress?: boolean
+  showTimestamp?: boolean
   toastId?: string | number
   activeId: string | number
   onDismiss?: (id: string | number) => void
@@ -190,6 +192,7 @@ function GooeyToastWrapper({
   const [description, setDescription] = useState(initialDescription)
   const [action, setAction] = useState(initialAction)
   const [currentIcon, setCurrentIcon] = useState<ReactNode | undefined>(icon)
+  const [showTimestamp, setShowTimestamp] = useState(initialShowTimestamp ?? true)
 
   // Subscribe to in-place updates for this toast's ID.
   useEffect(() => {
@@ -202,6 +205,7 @@ function GooeyToastWrapper({
       }
       if (opts.action !== undefined) setAction(opts.action)
       if ('icon' in opts) setCurrentIcon(opts.icon ?? undefined)
+      if (opts.showTimestamp !== undefined) setShowTimestamp(opts.showTimestamp)
     }
     _toastUpdateListeners.set(activeId, handleUpdate)
     return () => {
@@ -241,6 +245,7 @@ function GooeyToastWrapper({
         spring={spring}
         bounce={bounce}
         showProgress={showProgress}
+        showTimestamp={showTimestamp}
         toastId={toastId}
       />
     </ToastErrorBoundary>
@@ -337,6 +342,7 @@ function PromiseToastWrapper<T>({
         preset={data.preset}
         spring={data.spring}
         bounce={data.bounce}
+        showTimestamp={data.showTimestamp ?? true}
       />
     </ToastErrorBoundary>
   )
@@ -374,6 +380,7 @@ function createGooeyToast(
           spring={options?.spring}
           bounce={options?.bounce}
           showProgress={options?.showProgress}
+          showTimestamp={options?.showTimestamp}
           toastId={hasExpandedContent ? toastId : undefined}
           activeId={toastId}
           onDismiss={options?.onDismiss}

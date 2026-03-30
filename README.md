@@ -164,6 +164,7 @@ Options passed as the second argument to `gooeyToast()` and type-specific method
 | `timing`      | `GooeyToastTimings`   | Animation timing overrides         |
 | `spring`      | `boolean`            | Enable spring/bounce animations (default `true`) |
 | `bounce`      | `number`             | Spring intensity from `0.05` (subtle) to `0.8` (dramatic), default `0.4` |
+| `showTimestamp` | `boolean`         | Show/hide timestamp in toast header/body (default `true`) |
 | `showProgress`| `boolean`            | Show countdown progress bar                      |
 | `onDismiss`   | `(id) => void`       | Called when toast is dismissed (any reason)       |
 | `onAutoClose` | `(id) => void`       | Called only on timer-based auto-dismiss           |

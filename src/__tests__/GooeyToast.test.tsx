@@ -103,6 +103,18 @@ describe('GooeyToast', () => {
     expect(screen.queryByRole('button')).toBeNull()
   })
 
+  it('allows disabling timestamp with showTimestamp=false', () => {
+    render(<GooeyToast title="Done!" type="success" phase="success" showTimestamp={false} />)
+    const timestamp = document.querySelector('[class*="timestamp"]')
+    expect(timestamp).toBeNull()
+  })
+
+  it('renders timestamp by default', () => {
+    render(<GooeyToast title="Done!" type="success" phase="success" />)
+    const timestamp = document.querySelector('[class*="timestamp"]')
+    expect(timestamp).toBeInTheDocument()
+  })
+
   it('renders custom icon when provided', () => {
     render(
       <GooeyToast

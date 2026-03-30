@@ -30,6 +30,7 @@ export interface GooeyToastProps {
   spring?: boolean
   bounce?: number
   showProgress?: boolean
+  showTimestamp?: boolean
   toastId?: string | number
 }
 
@@ -375,6 +376,7 @@ export const GooeyToast: FC<GooeyToastProps> = ({
   preset,
   spring: springProp,
   bounce: bounceProp,
+  showTimestamp = true,
   showProgress: showProgressProp,
   toastId,
 }) => {
@@ -1241,7 +1243,7 @@ export const GooeyToast: FC<GooeyToastProps> = ({
         <div ref={headerRef} className={`${styles.header} ${titleColorMap[effectivePhase]}${classNames?.header ? ` ${classNames.header}` : ''}`}>
           {iconAndTitle}
           {/* No-body toasts: timestamp inline after the title (hidden after action success) */}
-          {!hasDescription && !hasAction && !actionSuccess && <span className={styles.timestamp}>{timestampStr}</span>}
+          {!hasDescription && !hasAction && !actionSuccess && showTimestamp && <span className={styles.timestamp}>{timestampStr}</span>}
         </div>
 
         <AnimatePresence>
@@ -1255,15 +1257,17 @@ export const GooeyToast: FC<GooeyToastProps> = ({
               exit={{ opacity: 0 }}
               transition={prefersReducedMotion ? { duration: 0.01 } : { duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
             >
-              <span className={styles.timestamp} style={{ float: 'right', marginLeft: 10, marginTop: 3, paddingLeft: 0 }}>{timestampStr}</span>
-              {effectiveDescription}
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                <div style={{ flex: 1, minWidth: 0 }}>{effectiveDescription}</div>
+                {showTimestamp && <span className={styles.timestamp}>{timestampStr}</span>}
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
 
         {/* Body toasts without description: timestamp on its own line */}
         <AnimatePresence>
-          {showBody && !hasDescription && hasAction && !dismissing && (
+          {showBody && !hasDescription && hasAction && !dismissing && showTimestamp && (
             <motion.div
               key="timestamp-body"
               className={styles.timestamp}

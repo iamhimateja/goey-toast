@@ -39,6 +39,7 @@ export interface GooeyToastData {
   preset?: AnimationPresetName
   spring?: boolean
   bounce?: number
+  showTimestamp?: boolean
 }
 
 export interface GooeyToastOptions {
@@ -56,6 +57,7 @@ export interface GooeyToastOptions {
   spring?: boolean
   bounce?: number
   showProgress?: boolean
+  showTimestamp?: boolean
   onDismiss?: (id: string | number) => void
   onAutoClose?: (id: string | number) => void
 }
@@ -81,6 +83,7 @@ export interface GooeyPromiseData<T> {
   preset?: AnimationPresetName
   spring?: boolean
   bounce?: number
+  showTimestamp?: boolean
   onDismiss?: (id: string | number) => void
   onAutoClose?: (id: string | number) => void
 }
@@ -93,6 +96,7 @@ export interface GooeyToastUpdateOptions {
   type?: GooeyToastType
   action?: GooeyToastAction
   icon?: ReactNode | null
+  showTimestamp?: boolean
 }
 
 export interface DismissFilter {
