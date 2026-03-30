@@ -154,7 +154,6 @@ function GooeyToastWrapper({
   showProgress,
   showTimestamp: initialShowTimestamp,
   toastId,
-  activeId,
   onDismiss,
   onAutoClose,
 }: {
@@ -174,17 +173,16 @@ function GooeyToastWrapper({
   bounce?: number
   showProgress?: boolean
   showTimestamp?: boolean
-  toastId?: string | number
-  activeId: string | number
+  toastId: string | number
   onDismiss?: (id: string | number) => void
   onAutoClose?: (id: string | number) => void
 }) {
   // Register callbacks so _onToastDismissed can invoke them on unmount
   useEffect(() => {
     if (onDismiss || onAutoClose) {
-      _toastCallbacks.set(activeId, { onDismiss, onAutoClose })
+      _toastCallbacks.set(toastId, { onDismiss, onAutoClose })
     }
-  }, [activeId, onDismiss, onAutoClose])
+  }, [toastId, onDismiss, onAutoClose])
 
   const [title, setTitle] = useState(initialTitle)
   const [type, setType] = useState(initialType)
@@ -207,11 +205,11 @@ function GooeyToastWrapper({
       if ('icon' in opts) setCurrentIcon(opts.icon ?? undefined)
       if (opts.showTimestamp !== undefined) setShowTimestamp(opts.showTimestamp)
     }
-    _toastUpdateListeners.set(activeId, handleUpdate)
+    _toastUpdateListeners.set(toastId, handleUpdate)
     return () => {
-      _toastUpdateListeners.delete(activeId)
+      _toastUpdateListeners.delete(toastId)
     }
-  }, [activeId])
+  }, [toastId])
 
   // Guarantee the queue slot is freed when this toast unmounts from Sonner's DOM.
   // Uses a mounted ref + delayed check to survive React StrictMode's dev-only
@@ -222,10 +220,10 @@ function GooeyToastWrapper({
     return () => {
       mountedRef.current = false
       setTimeout(() => {
-        if (!mountedRef.current) _onToastDismissed(activeId)
+        if (!mountedRef.current) _onToastDismissed(toastId)
       }, 100)
     }
-  }, [activeId])
+  }, [toastId])
 
   return (
     <ToastErrorBoundary>
@@ -343,6 +341,7 @@ function PromiseToastWrapper<T>({
         spring={data.spring}
         bounce={data.bounce}
         showTimestamp={data.showTimestamp ?? true}
+        toastId={toastId}
       />
     </ToastErrorBoundary>
   )
@@ -381,8 +380,7 @@ function createGooeyToast(
           bounce={options?.bounce}
           showProgress={options?.showProgress}
           showTimestamp={options?.showTimestamp}
-          toastId={hasExpandedContent ? toastId : undefined}
-          activeId={toastId}
+          toastId={toastId}
           onDismiss={options?.onDismiss}
           onAutoClose={options?.onAutoClose}
         />

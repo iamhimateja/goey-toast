@@ -23,7 +23,8 @@
 - Dismiss by type filter: `gooeyToast.dismiss({ type: 'error' })`
 - Dark mode and RTL layout support
 - Animation presets: smooth, bouncy, subtle, snappy
-- Timestamp display on expanded toasts
+- Timestamp display on expanded toasts with optional `showTimestamp` toggle
+- Close button with configurable position (`top-left` / `top-right`)
 - Countdown progress bar with hover-pause and re-expand
 - Keyboard dismiss (Escape) and swipe-to-dismiss on mobile
 - Toast queue with configurable overflow strategy
@@ -217,6 +218,7 @@ Props for the `<GooeyToaster />` component.
 | `bounce`     | `number`                              | `0.4`            | Spring intensity: `0.05` (subtle) to `0.8` (dramatic) |
 | `preset`     | `AnimationPresetName`                 | --               | Animation preset for all toasts               |
 | `closeOnEscape` | `boolean`                          | `true`           | Dismiss most recent toast on Escape key       |
+| `closeButton`  | `boolean \| 'top-left' \| 'top-right'` | `false`       | Show close button on hover                    |
 | `showProgress` | `boolean`                           | `false`          | Show countdown progress bar on all toasts     |
 | `maxQueue`   | `number`                              | `Infinity`       | Maximum queued toasts                         |
 | `queueOverflow` | `'drop-oldest' \| 'drop-newest'`   | `'drop-oldest'`  | Queue overflow strategy                       |
@@ -422,6 +424,26 @@ Press **Escape** to dismiss the most recent toast. Enabled by default; disable w
 ### Swipe to Dismiss
 
 On mobile, swipe toasts to dismiss them. Enabled by default; disable with `swipeToDismiss={false}`.
+
+### Close Button
+
+Show a close button on hover. Position it `top-left` (default) or `top-right`:
+
+```tsx
+<GooeyToaster closeButton />
+<GooeyToaster closeButton="top-left" />
+<GooeyToaster closeButton="top-right" />
+```
+
+The close button inherits the toast's border and fill color styling. Hidden during the loading phase of promise toasts.
+
+### Hiding Timestamps
+
+Hide the timestamp from toasts:
+
+```tsx
+gooeyToast.success('Saved', { showTimestamp: false })
+```
 
 ## Exports
 

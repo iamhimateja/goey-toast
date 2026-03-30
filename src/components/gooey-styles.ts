@@ -32,4 +32,6 @@ export const styles = {
   progressInfo: 'gooey-progressInfo',
   progressPaused: 'gooey-progressPaused',
   timestamp: 'gooey-timestamp',
+  closeButton: 'gooey-closeButton',
+  closeButtonRight: 'gooey-closeButtonRight',
 } as const

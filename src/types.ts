@@ -111,7 +111,7 @@ export interface GooeyToasterProps {
   theme?: 'light' | 'dark'
   toastOptions?: Partial<ExternalToast>
   expand?: boolean
-  closeButton?: boolean
+  closeButton?: boolean | 'top-left' | 'top-right'
   richColors?: boolean
   visibleToasts?: number
   dir?: 'ltr' | 'rtl'

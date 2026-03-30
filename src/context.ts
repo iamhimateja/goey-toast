@@ -110,6 +110,16 @@ export function getGooeyShowProgress() {
   return _showProgress
 }
 
+let _closeButton: boolean | 'top-left' | 'top-right' = false
+
+export function setGooeyCloseButton(value: boolean | 'top-left' | 'top-right') {
+  _closeButton = value
+}
+
+export function getGooeyCloseButton(): boolean | 'top-left' | 'top-right' {
+  return _closeButton
+}
+
 let _containerHovered = false
 type HoverCb = (hovered: boolean) => void
 const _hoverSubs: Set<HoverCb> = new Set()

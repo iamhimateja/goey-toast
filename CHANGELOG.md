@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2026-03-29
+
+### Added
+
+- Close button with configurable position (`top-left` / `top-right`) via `closeButton` prop on `GooeyToaster`
+- Close button inherits toast border/fill styling; uses shadow when no border is set
+- Close button visible on hover, touch, and keyboard focus with scale animation
+- Dark mode support for close button with light glow shadow
+- Optional `showTimestamp` prop to show/hide timestamp on individual toasts (default `true`)
+- Backward-compatible export aliases for v0.2.x users (`GoeyToaster`, `goeyToast`, etc.)
+
+### Fixed
+
+- ESM export broken in v0.3.0 — rebuilt exports to reference correct renamed variables
+- Center toast positioning on mobile viewports (≤600px)
+- Toast header stretching full width due to `display: flex` regression — restored `inline-flex`
+- Swipe-to-dismiss now works for compact (no-description) toasts — `toastId` always passed
+- Close button position correctly mirrors for right-side and center toast positions
+
 ## [0.1.0] - 2026-02
 
 ### Added

@@ -82,12 +82,10 @@
    Shared
    ============================================ */
 .gooey-header {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: flex-start;
   gap: 8px;
   color: inherit;
-  min-width: 0;
 }
 
 .gooey-header > .gooey-title,
@@ -313,3 +311,57 @@
 .gooey-wrapper[data-theme="dark"] .gooey-progressError { background: #EF5350; }
 .gooey-wrapper[data-theme="dark"] .gooey-progressWarning { background: #FFB300; }
 .gooey-wrapper[data-theme="dark"] .gooey-progressInfo { background: #42A5F5; }
+
+/* ---------------------------------------------------------------------------
+   Close button — appears on hover, positioned top-left by default.
+   Use closeButton="top-right" on GooeyToaster for top-right placement.
+   Border and background are set inline to match the toast's own styling.
+   --------------------------------------------------------------------------- */
+.gooey-closeButton {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border-style: solid;
+  border-radius: 50%;
+  color: #444;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  pointer-events: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.gooey-closeButtonRight {
+  left: auto;
+  right: -1px;
+  top: 6px;
+}
+.gooey-wrapper:hover .gooey-closeButton,
+.gooey-wrapper:focus-within .gooey-closeButton,
+.gooey-wrapper:active .gooey-closeButton {
+  opacity: 1;
+  pointer-events: auto;
+}
+.gooey-closeButton:focus,
+.gooey-closeButton:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.15);
+}
+.gooey-closeButton:hover {
+  transform: scale(1.15);
+}
+.gooey-closeButton:active {
+  transform: scale(0.95);
+}
+.gooey-wrapper[data-theme="dark"] .gooey-closeButton {
+  color: #e0e0e0;
+  box-shadow: 0 1px 4px rgba(255, 255, 255, 0.25);
+}

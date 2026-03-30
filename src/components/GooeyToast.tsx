@@ -4,7 +4,7 @@ import { toast as sonnerToast } from 'sonner'
 import type { GooeyToastAction, GooeyToastClassNames, GooeyToastPhase, GooeyToastTimings, GooeyToastType } from '../types'
 import type { AnimationPresetName } from '../presets'
 import { animationPresets } from '../presets'
-import { getGooeyPosition, getGooeyDir, getGooeySpring, getGooeyBounce, getGooeySwipeToDismiss, getGooeyTheme, getGooeyShowProgress, subscribeContainerHovered, getContainerHovered } from '../context'
+import { getGooeyPosition, getGooeyDir, getGooeySpring, getGooeyBounce, getGooeySwipeToDismiss, getGooeyTheme, getGooeyShowProgress, getGooeyCloseButton, subscribeContainerHovered, getContainerHovered } from '../context'
 import { DefaultIcon, SuccessIcon, ErrorIcon, WarningIcon, InfoIcon, SpinnerIcon } from '../icons'
 import { usePrefersReducedMotion } from '../usePrefersReducedMotion'
 import { styles } from './gooey-styles'
@@ -381,6 +381,8 @@ export const GooeyToast: FC<GooeyToastProps> = ({
   toastId,
 }) => {
   const theme = getGooeyTheme()
+  const closeButtonSetting = getGooeyCloseButton()
+  const showCloseButton = closeButtonSetting !== false
   const fillColor = fillColorProp ?? (theme === 'dark' ? '#1a1a1a' : '#ffffff')
   const position = getGooeyPosition()
   const dir = getGooeyDir()
@@ -1233,6 +1235,32 @@ export const GooeyToast: FC<GooeyToastProps> = ({
           strokeWidth={borderColor ? (borderWidth ?? 1.5) : 0}
         />
       </svg>
+
+      {/* Close button — shown on hover when enabled via GooeyToaster closeButton prop */}
+      {showCloseButton && effectivePhase !== 'loading' && (
+        <button
+          className={`${styles.closeButton}${(isRight ? closeButtonSetting !== 'top-right' : closeButtonSetting === 'top-right') ? ` ${styles.closeButtonRight}` : ''}`}
+          aria-label="Close toast"
+          type="button"
+          style={{
+            background: fillColor,
+            borderColor: borderColor || 'transparent',
+            borderWidth: borderColor ? (borderWidth ?? 1.5) : 0,
+            boxShadow: borderColor ? 'none' : '0 1px 4px rgba(0, 0, 0, 0.2)',
+            ...(isCenter && closeButtonSetting !== 'top-right' ? { top: 6, left: -1 } : {}),
+          }}
+          onClick={(e) => {
+            e.stopPropagation()
+            const id = toastId
+            if (id != null) sonnerToast.dismiss(id)
+          }}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      )}
 
       {/* Content — un-flip so text reads normally */}
       <div

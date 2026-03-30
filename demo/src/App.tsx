@@ -149,6 +149,8 @@ function App() {
   const [bTheme, setBTheme] = useState<'light' | 'dark'>('light')
   const [bShowProgress, setBShowProgress] = useState(false)
   const [bCloseOnEscape, setBCloseOnEscape] = useState(true)
+  const [bShowTimestamp, setBShowTimestamp] = useState(true)
+  const [bCloseButton, setBCloseButton] = useState<boolean | 'top-left' | 'top-right'>(false)
 
   // Close mobile menu on page change
   useEffect(() => {
@@ -190,6 +192,7 @@ function App() {
       options.bounce = bBounce
     }
     if (bShowProgress) options.showProgress = true
+    if (!bShowTimestamp) options.showTimestamp = false
 
     if (bType === 'default') gooeyToast(bTitle, options)
     else gooeyToast[bType](bTitle, options)
@@ -202,13 +205,16 @@ function App() {
     const hasPreset = bPreset != null
     const hasSpringOff = !hasPreset && !bSpring
     const hasBounce = !hasPreset && bBounce !== 0.4
-    const hasOpts = bHasDesc || bHasAction || hasFill || hasBorder || hasPreset || hasSpringOff || hasBounce || bShowProgress
+    const hasOpts = bHasDesc || bHasAction || hasFill || hasBorder || hasPreset || hasSpringOff || hasBounce || bShowProgress || !bShowTimestamp
     const call = bType === 'default' ? 'gooeyToast' : `gooeyToast.${bType}`
 
     const toasterProps = [`position="${bPosition}"`]
     if (bTheme !== 'light') toasterProps.push(`theme="${bTheme}"`)
     if (bShowProgress) toasterProps.push('showProgress')
     if (!bCloseOnEscape) toasterProps.push('closeOnEscape={false}')
+    if (bCloseButton === true) toasterProps.push('closeButton')
+    else if (bCloseButton === 'top-left') toasterProps.push('closeButton="top-left"')
+    else if (bCloseButton === 'top-right') toasterProps.push('closeButton="top-right"')
     lines.push(`<GooeyToaster ${toasterProps.join(' ')} />`)
     lines.push('')
     if (!hasOpts) {
@@ -231,6 +237,7 @@ function App() {
       if (hasSpringOff) lines.push(`  spring: false,`)
       if (hasBounce) lines.push(`  bounce: ${bBounce},`)
       if (bShowProgress) lines.push(`  showProgress: true,`)
+      if (!bShowTimestamp) lines.push(`  showTimestamp: false,`)
       if (bDisplayDuration !== 4000) {
         lines.push(`  timing: {`)
         lines.push(`    displayDuration: ${bDisplayDuration},`)
@@ -249,6 +256,7 @@ function App() {
         theme={bTheme}
         showProgress={bShowProgress}
         closeOnEscape={bCloseOnEscape}
+        closeButton={bCloseButton}
       />
 
       {/* Header */}
@@ -316,6 +324,28 @@ function App() {
 
           <div className="changelog-entry">
             <div className="changelog-version">
+              <span className="changelog-tag">v0.4.0</span>
+              <span className="changelog-date">Mar 29, 2026</span>
+            </div>
+            <div className="changelog-body">
+              <h4>Close Button, Timestamp Toggle & Fixes</h4>
+              <ul>
+                <li>Close button with <code>closeButton</code> prop — supports <code>top-left</code> and <code>top-right</code> positions</li>
+                <li>Close button inherits toast border/fill styling with shadow fallback</li>
+                <li>Close button supports hover scale animation, dark mode, and keyboard/touch accessibility</li>
+                <li>Optional <code>showTimestamp</code> prop to show/hide timestamp per toast (default <code>true</code>)</li>
+                <li>Backward-compatible export aliases for v0.2.x users (<code>GoeyToaster</code>, <code>goeyToast</code>)</li>
+                <li>Fixed ESM export broken in v0.3.0</li>
+                <li>Fixed center toast positioning on mobile viewports</li>
+                <li>Fixed toast header stretching full width regression</li>
+                <li>Fixed swipe-to-dismiss for compact toasts</li>
+                <li>Close button and timestamp toggle added to interactive builder</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="changelog-entry">
+            <div className="changelog-version">
               <span className="changelog-tag">v0.3.0</span>
               <span className="changelog-date">Feb 26, 2026</span>
             </div>
@@ -334,7 +364,6 @@ function App() {
                 <li>Progress countdown bar with <code>showProgress</code> prop and hover pause</li>
                 <li>Re-expand on hover after progress bar completes with animation reset</li>
                 <li>Timestamp display on toasts (local time with seconds)</li>
-                <li>Timestamp visibility toggle via <code>showTimestamp</code> (default true)</li>
                 <li>Max queue overflow control: <code>maxQueue</code> and <code>queueOverflow</code> props</li>
                 <li><code>onDismiss</code> and <code>onAutoClose</code> callback support</li>
                 <li>Softer collapse bounce to prevent text clipping</li>
@@ -458,7 +487,7 @@ function App() {
           {/* Hero */}
           <div className="hero">
             <div className="hero-badge">
-              <span /> v0.3.0
+              <span /> v0.4.0
             </div>
             <h1 ref={heroTitleRef} className={heroLanding ? 'hero-title--landing' : ''}>gooey-toast <img src="/mascot.png" alt="mascot" className={`hero-mascot${heroLanding ? ' hero-mascot--landing' : ''}`} /></h1>
             <p className="hero-description">
@@ -870,6 +899,44 @@ function App() {
                   </button>
                 </div>
               </div>
+
+              {/* Show Timestamp */}
+              <div className="builder-row">
+                <div className="toggle-row">
+                  <span className="toggle-row-label">Show Timestamp</span>
+                  <button className="toggle" data-on={bShowTimestamp} onClick={() => setBShowTimestamp(!bShowTimestamp)}>
+                    <div className="toggle-knob" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Close Button */}
+              <div className="builder-row">
+                <div className="toggle-row">
+                  <span className="toggle-row-label">Close Button</span>
+                  <button className="toggle" data-on={bCloseButton !== false} onClick={() => setBCloseButton(bCloseButton === false ? 'top-left' : false)}>
+                    <div className="toggle-knob" />
+                  </button>
+                </div>
+              </div>
+              {bCloseButton !== false && (
+                <div className="builder-row">
+                  <div className="builder-label">Close Button Position</div>
+                  <div className="type-pills">
+                    {(['top-left', 'top-right'] as const).map(pos => (
+                      <button
+                        key={pos}
+                        className="type-pill"
+                        data-type="position"
+                        data-active={bCloseButton === pos}
+                        onClick={() => setBCloseButton(pos)}
+                      >
+                        {pos}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Fire button */}
               <div className="builder-row">

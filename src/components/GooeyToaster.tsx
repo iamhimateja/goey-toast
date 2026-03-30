@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { Toaster } from 'sonner'
 import type { GooeyToasterProps } from '../types'
 import { animationPresets } from '../presets'
-import { setGooeyPosition, setGooeyDir, setGooeySpring, setGooeyBounce, setGooeyVisibleToasts, setContainerHovered, setGooeySwipeToDismiss, setGooeyCloseOnEscape, setGooeyTheme, setGooeyMaxQueue, setGooeyQueueOverflow, setGooeyShowProgress } from '../context'
+import { setGooeyPosition, setGooeyDir, setGooeySpring, setGooeyBounce, setGooeyVisibleToasts, setContainerHovered, setGooeySwipeToDismiss, setGooeyCloseOnEscape, setGooeyTheme, setGooeyMaxQueue, setGooeyQueueOverflow, setGooeyShowProgress, setGooeyCloseButton } from '../context'
 import { gooeyToast, _getMostRecentActiveId } from '../gooey-toast'
 import { AriaLiveAnnouncer } from './AriaLiveAnnouncer'
 
@@ -91,6 +91,10 @@ export function GooeyToaster({
     setGooeyShowProgress(showProgress)
   }, [showProgress])
 
+  useEffect(() => {
+    setGooeyCloseButton(closeButton ?? false)
+  }, [closeButton])
+
   // Detect hover on the Sonner container and broadcast to all GooeyToast instances.
   // Uses Sonner's `data-expanded` attribute (set per-toast <li>) as the hover signal
   // rather than raw mouseenter/mouseleave on the <ol>. This is more reliable because
@@ -177,7 +181,7 @@ export function GooeyToaster({
         theme={theme}
         toastOptions={{ unstyled: true, ...toastOptions }}
         expand={expand}
-        closeButton={closeButton}
+        closeButton={false}
         richColors={richColors}
         visibleToasts={99}
         dir={dir}
