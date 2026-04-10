@@ -224,6 +224,7 @@ Props for the `<GooeyToaster />` component.
 | `queueOverflow` | `'drop-oldest' \| 'drop-newest'`   | `'drop-oldest'`  | Queue overflow strategy                       |
 | `dir`        | `'ltr' \| 'rtl'`                     | `'ltr'`          | Layout direction                              |
 | `swipeToDismiss` | `boolean`                         | `true`           | Enable swipe-to-dismiss on mobile             |
+| `showTimestamp` | `boolean`                         | `true`           | Show/hide timestamp on all toasts globally     |
 
 ### `GooeyPromiseData<T>`
 
@@ -439,10 +440,11 @@ The close button inherits the toast's border and fill color styling. Hidden duri
 
 ### Hiding Timestamps
 
-Hide the timestamp from toasts:
-
-```tsx
+// Per-toast: hide timestamp for this toast only
 gooeyToast.success('Saved', { showTimestamp: false })
+
+// Globally: hide timestamp for all toasts
+<GooeyToaster showTimestamp={false} />
 ```
 
 ## Exports

@@ -1187,6 +1187,7 @@ gooeyToast.success('Deployed', {
                     <tr><td>queueOverflow</td><td>'drop-oldest' | 'drop-newest'</td><td>'drop-oldest'</td><td>Behavior when queue exceeds maxQueue</td></tr>
                     <tr><td>swipeToDismiss</td><td>boolean</td><td>true</td><td>Enable swipe-to-dismiss touch gestures on mobile</td></tr>
                     <tr><td>preset</td><td>AnimationPresetName</td><td>—</td><td>Named animation preset (smooth, bouncy, subtle, snappy)</td></tr>
+                    <tr><td>showTimestamp</td><td>boolean</td><td>true</td><td>Show/hide timestamp on all toasts globally</td></tr>
                   </tbody>
                 </table>
                 </div>
@@ -1218,6 +1219,7 @@ gooeyToast.success('Deployed', {
                     <tr><td>spring</td><td>boolean</td><td>Enable spring/bounce animations (default true)</td></tr>
                     <tr><td>bounce</td><td>number</td><td>Spring intensity: 0.05 (subtle) to 0.8 (dramatic), default 0.4</td></tr>
                     <tr><td>showProgress</td><td>boolean</td><td>Show countdown progress bar on this toast</td></tr>
+                    <tr><td>showTimestamp</td><td>boolean</td><td>Show/hide timestamp on this toast (default true)</td></tr>
                     <tr><td>preset</td><td>AnimationPresetName</td><td>Named animation preset (smooth, bouncy, subtle, snappy)</td></tr>
                     <tr><td>onDismiss</td><td>(id: string | number) =&gt; void</td><td>Callback fired when toast is dismissed (any reason)</td></tr>
                     <tr><td>onAutoClose</td><td>(id: string | number) =&gt; void</td><td>Callback fired only when toast auto-closes (timer)</td></tr>
