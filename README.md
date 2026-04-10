@@ -440,6 +440,7 @@ The close button inherits the toast's border and fill color styling. Hidden duri
 
 ### Hiding Timestamps
 
+```tsx
 // Per-toast: hide timestamp for this toast only
 gooeyToast.success('Saved', { showTimestamp: false })
 
