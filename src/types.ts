@@ -123,4 +123,5 @@ export interface GooeyToasterProps {
   maxQueue?: number
   queueOverflow?: 'drop-oldest' | 'drop-newest'
   showProgress?: boolean
+  showTimestamp?: boolean
 }

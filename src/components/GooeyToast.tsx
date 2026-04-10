@@ -4,7 +4,7 @@ import { toast as sonnerToast } from 'sonner'
 import type { GooeyToastAction, GooeyToastClassNames, GooeyToastPhase, GooeyToastTimings, GooeyToastType } from '../types'
 import type { AnimationPresetName } from '../presets'
 import { animationPresets } from '../presets'
-import { getGooeyPosition, getGooeyDir, getGooeySpring, getGooeyBounce, getGooeySwipeToDismiss, getGooeyTheme, getGooeyShowProgress, getGooeyCloseButton, subscribeContainerHovered, getContainerHovered } from '../context'
+import { getGooeyPosition, getGooeyDir, getGooeySpring, getGooeyBounce, getGooeySwipeToDismiss, getGooeyTheme, getGooeyShowProgress, getGooeyCloseButton, subscribeContainerHovered, getContainerHovered, getGooeyShowTimestamp } from '../context'
 import { DefaultIcon, SuccessIcon, ErrorIcon, WarningIcon, InfoIcon, SpinnerIcon } from '../icons'
 import { usePrefersReducedMotion } from '../usePrefersReducedMotion'
 import { styles } from './gooey-styles'
@@ -376,7 +376,7 @@ export const GooeyToast: FC<GooeyToastProps> = ({
   preset,
   spring: springProp,
   bounce: bounceProp,
-  showTimestamp = true,
+  showTimestamp: showTimestampProp,
   showProgress: showProgressProp,
   toastId,
 }) => {
@@ -396,6 +396,7 @@ export const GooeyToast: FC<GooeyToastProps> = ({
   const useSpring = springProp ?? presetConfig?.spring ?? getGooeySpring()
   const bounceVal = bounceProp ?? presetConfig?.bounce ?? getGooeyBounce() ?? 0.4
   const showProgress = showProgressProp ?? getGooeyShowProgress()
+  const showTimestamp = showTimestampProp ?? getGooeyShowTimestamp()
 
   // Action success override state
   const [actionSuccess, setActionSuccess] = useState<string | null>(null)

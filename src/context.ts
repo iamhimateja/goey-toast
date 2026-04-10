@@ -110,6 +110,16 @@ export function getGooeyShowProgress() {
   return _showProgress
 }
 
+let _showTimestamp = true
+
+export function setGooeyShowTimestamp(show: boolean) {
+  _showTimestamp = show
+}
+
+export function getGooeyShowTimestamp() {
+  return _showTimestamp
+}
+
 let _closeButton: boolean | 'top-left' | 'top-right' = false
 
 export function setGooeyCloseButton(value: boolean | 'top-left' | 'top-right') {
