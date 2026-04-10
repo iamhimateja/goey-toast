@@ -1219,7 +1219,7 @@ gooeyToast.success('Deployed', {
                     <tr><td>spring</td><td>boolean</td><td>Enable spring/bounce animations (default true)</td></tr>
                     <tr><td>bounce</td><td>number</td><td>Spring intensity: 0.05 (subtle) to 0.8 (dramatic), default 0.4</td></tr>
                     <tr><td>showProgress</td><td>boolean</td><td>Show countdown progress bar on this toast</td></tr>
-                    <tr><td>showTimestamp</td><td>boolean</td><td>Show/hide timestamp on this toast (default true)</td></tr>
+                    <tr><td>showTimestamp</td><td>boolean</td><td>Show/hide timestamp on this toast; when omitted, inherits <code>GooeyToaster.showTimestamp</code> (default <code>true</code>)</td></tr>
                     <tr><td>preset</td><td>AnimationPresetName</td><td>Named animation preset (smooth, bouncy, subtle, snappy)</td></tr>
                     <tr><td>onDismiss</td><td>(id: string | number) =&gt; void</td><td>Callback fired when toast is dismissed (any reason)</td></tr>
                     <tr><td>onAutoClose</td><td>(id: string | number) =&gt; void</td><td>Callback fired only when toast auto-closes (timer)</td></tr>
