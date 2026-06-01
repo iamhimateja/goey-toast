@@ -29,13 +29,17 @@
 /* Style detection marker — used by GooeyToaster to verify CSS is loaded */
 [data-gooey-toast-css] { --gooey-toast: 1; }
 
-/* When Sonner expands the stack (hover), shorten height/transform CSS transitions
-   so our syncSonnerHeights corrections apply quickly (~150ms instead of 400ms).
-   Sonner writes stale --offset values from its React state; 400ms correction
-   causes visible overlap. 150ms is fast enough to prevent overlap while keeping
-   stacking spread and entry animations smooth. */
+/* When Sonner expands the stack (hover), our syncSonnerHeights corrections are
+   applied synchronously (before paint) by the shared MutationObserver, so the
+   transform/height transition target is always the correct value — there is no
+   stale-offset frame to cause overlap. This lets us use a smooth ease-out curve
+   over a longer duration so toasts glide between stacked positions instead of
+   snapping. */
 [data-sonner-toast][data-expanded="true"] {
-  transition: transform 0.15s, opacity 0.4s, height 0.15s, box-shadow 0.2s !important;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.4s,
+              height 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.2s !important;
 }
 
 
