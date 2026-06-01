@@ -42,6 +42,12 @@
               box-shadow 0.2s !important;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  [data-sonner-toast][data-expanded="true"] {
+    transition: opacity 0.01s, box-shadow 0.01s !important;
+  }
+}
+
 
 /* ============================================
    Wrapper — single container for both states
