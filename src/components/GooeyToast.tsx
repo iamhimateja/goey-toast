@@ -116,8 +116,13 @@ function registerSonnerObserver(ol: Element, callback: () => void) {
     // re-trigger the observer (avoiding an infinite loop), then reconnect.
     const observer = new MutationObserver(() => {
       observer.disconnect()
-      callbacks.forEach(cb => cb())
-      observer.observe(ol, observeOptions)
+      try {
+        for (const cb of callbacks) {
+          cb()
+        }
+      } finally {
+        observer.observe(ol, observeOptions)
+      }
     })
     observer.observe(ol, observeOptions)
     entry = { observer, callbacks }
