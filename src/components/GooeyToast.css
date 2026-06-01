@@ -116,7 +116,7 @@
   line-height: 1;
   white-space: nowrap;
   color: inherit;
-  padding: 0 4px 0 2px;
+  padding: 0 4px 2px 2px;
 }
 
 .gooey-titleDefault { color: #555; }
