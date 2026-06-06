@@ -100,21 +100,31 @@ function registerSonnerObserver(ol: Element, callback: () => void) {
   let entry = observerRegistry.get(ol)
   if (!entry) {
     const callbacks = new Set<() => void>()
-    let applying = false
-    const observer = new MutationObserver(() => {
-      if (applying) return
-      applying = true
-      requestAnimationFrame(() => {
-        callbacks.forEach(cb => cb())
-        requestAnimationFrame(() => { applying = false })
-      })
-    })
-    observer.observe(ol, {
+    const observeOptions: MutationObserverInit = {
       attributes: true,
       attributeFilter: ['style', 'data-visible'],
       subtree: true,
       childList: true,
+    }
+    // Correct offsets synchronously within the MutationObserver microtask
+    // (which runs before paint) so Sonner's stale --offset is overwritten in
+    // the same frame it was written. This eliminates the 1-frame stale-offset
+    // flash that previously forced us to disable CSS transitions. With the
+    // stale frame gone, transitions can stay enabled for smooth stack motion.
+    //
+    // We disconnect while applying our own style writes so they don't
+    // re-trigger the observer (avoiding an infinite loop), then reconnect.
+    const observer = new MutationObserver(() => {
+      observer.disconnect()
+      try {
+        for (const cb of callbacks) {
+          cb()
+        }
+      } finally {
+        observer.observe(ol, observeOptions)
+      }
     })
+    observer.observe(ol, observeOptions)
     entry = { observer, callbacks }
     observerRegistry.set(ol, entry)
   }
@@ -135,8 +145,9 @@ function registerSonnerObserver(ol: Element, callback: () => void) {
  * toast.custom() content. This function corrects --initial-height and --offset
  * so our morphing toasts stack correctly.
  *
- * When expanded (hovered), CSS transitions on [data-expanded="true"] are
- * overridden (GooeyToast.css) so writing these values takes effect instantly.
+ * Corrections are applied synchronously by the shared observer (before paint),
+ * so CSS transitions on [data-expanded="true"] can stay enabled and animate
+ * the stack movement smoothly without a stale-offset flash.
  *
  * DOM order: oldest toast at index 0, newest (front) at index n-1.
  * Front toast has --offset: 0; each older toast accumulates the heights of all
@@ -167,25 +178,12 @@ function syncSonnerHeights(
     return h > 0 ? h : PH
   })
 
-  // When expanded (hovered), temporarily kill CSS transitions so offset
-  // corrections apply in this paint — prevents overlap flash. The CSS shortens
-  // transitions to 150ms (GooeyToast.css) for Sonner's own changes, but our
-  // corrections must be truly instant since getBoundingClientRect above forces
-  // a layout that "locks in" stale values.
-  const isExpanded = includeOffsets && toasts[0]?.getAttribute('data-expanded') === 'true'
-  if (isExpanded) {
-    for (const t of toasts) t.style.setProperty('transition', 'none', 'important')
-  }
-
   // Always update --initial-height (the CSS height transition target).
   for (let i = 0; i < toasts.length; i++) {
     toasts[i].style.setProperty('--initial-height', `${heights[i]}px`)
   }
 
   if (!includeOffsets) {
-    if (isExpanded) {
-      for (const t of toasts) t.style.removeProperty('transition')
-    }
     return
   }
 
@@ -203,13 +201,6 @@ function syncSonnerHeights(
     if (i > 0) {
       runningOffset += heights[i] + gap
     }
-  }
-
-  if (isExpanded) {
-    // Force reflow so browser applies corrected values without transitions,
-    // then restore transitions for Sonner's own future animations.
-    void ol.offsetHeight
-    for (const t of toasts) t.style.removeProperty('transition')
   }
 }
 
@@ -1051,10 +1042,10 @@ export const GooeyToast: FC<GooeyToastProps> = ({
     const ol = wrapper.closest('[data-sonner-toast]')?.parentElement
     if (!ol) return
 
-    // Per-rAF sync: corrects --initial-height AND --offset every time Sonner
-    // overwrites them with stale values from its React state.
-    // When expanded, CSS transitions are disabled (GooeyToast.css) so corrections
-    // apply instantly without re-targeting a CSS transition mid-flight.
+    // Synchronous sync: corrects --initial-height AND --offset every time Sonner
+    // overwrites them with stale values from its React state. The shared observer
+    // runs the correction before paint, so CSS transitions stay enabled and the
+    // stack movement animates smoothly without a stale-offset overlap flash.
     const unregister = registerSonnerObserver(ol, () => {
       syncSonnerHeights(wrapper, true)
     })
