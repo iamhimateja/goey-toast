@@ -324,6 +324,21 @@ function App() {
 
           <div className="changelog-entry">
             <div className="changelog-version">
+              <span className="changelog-tag">v0.5.0</span>
+              <span className="changelog-date">Jun 8, 2026</span>
+            </div>
+            <div className="changelog-body">
+              <h4>AI Agent Skill &amp; CLI</h4>
+              <ul>
+                <li>Bundled Agent Skill (<code>SKILL.md</code>) so coding agents (Claude Code, Cursor, etc.) install and use goey-toast correctly — <code>npx skills add anl331/goey-toast</code> via <a href="https://www.skills.sh/" target="_blank" rel="noreferrer">skills.sh</a></li>
+                <li>New <code>goey-toast</code> CLI: <code>npx goey-toast add-skill</code> with <code>--agents</code> and <code>--dir</code> flags, plus <code>print-skill</code></li>
+                <li>Added "AI Agents &amp; Skills" docs section to this site and the README</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="changelog-entry">
+            <div className="changelog-version">
               <span className="changelog-tag">v0.4.1</span>
               <span className="changelog-date">Jun 8, 2026</span>
             </div>
