@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2026-06-08
+
+### Added
+
+- Bundled Agent Skill (`skills/goey-toast/SKILL.md`) so coding agents (Claude Code, Cursor, etc.) can install and use goey-toast correctly — install via `npx skills add anl331/goey-toast` ([skills.sh](https://www.skills.sh/))
+- `goey-toast` CLI (`npx goey-toast add-skill`) to copy the skill into a project, with `--agents` (write/append `AGENTS.md` pointer) and `--dir` (custom target) flags, plus `print-skill`
+- "AI Agents & Skills" section added to the docs site and README
+
 ## [0.4.1] - 2026-06-08
 
 ### Added

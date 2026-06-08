@@ -1045,6 +1045,33 @@ gooeyToast.success("Saved!")`}</code></pre>
             <div className="doc-section">
               <div className="doc-section-label">
                 <div className="doc-number">03</div>
+                <h3>AI Agents &amp; Skills</h3>
+              </div>
+              <div className="doc-section-content">
+                <p>
+                  Teach your coding agent (Claude Code, Cursor, etc.) how to install and
+                  use goey-toast with a bundled{' '}
+                  <span className="inline-code">SKILL.md</span>. Install it from the{' '}
+                  <a href="https://www.skills.sh/" target="_blank" rel="noreferrer">skills.sh</a>{' '}
+                  registry:
+                </p>
+                <pre><code>{`npx skills add anl331/goey-toast`}</code></pre>
+                <p>Or drop the skill into your project from the package itself:</p>
+                <pre><code>{`npx goey-toast add-skill            # -> .claude/skills/goey-toast/SKILL.md
+npx goey-toast add-skill --agents   # also write an AGENTS.md pointer
+npx goey-toast add-skill --dir .cursor/skills/goey-toast`}</code></pre>
+                <p>
+                  The agent then knows the API, the required{' '}
+                  <span className="inline-code">&lt;GooeyToaster /&gt;</span> mount, and the{' '}
+                  <span className="inline-code">styles.css</span> import — so it writes correct
+                  toast code on the first try.
+                </p>
+              </div>
+            </div>
+
+            <div className="doc-section">
+              <div className="doc-section-label">
+                <div className="doc-number">04</div>
                 <h3>Toast Types</h3>
               </div>
               <div className="doc-section-content">
@@ -1065,7 +1092,7 @@ gooeyToast.info('FYI')                 // blue`}</code></pre>
 
             <div className="doc-section">
               <div className="doc-section-label">
-                <div className="doc-number">04</div>
+                <div className="doc-number">05</div>
                 <h3>Description</h3>
               </div>
               <div className="doc-section-content">
@@ -1095,7 +1122,7 @@ gooeyToast.success('Deployed', {
 
             <div className="doc-section">
               <div className="doc-section-label">
-                <div className="doc-number">05</div>
+                <div className="doc-number">06</div>
                 <h3>Action Button</h3>
               </div>
               <div className="doc-section-content">
@@ -1120,7 +1147,7 @@ gooeyToast.success('Deployed', {
 
             <div className="doc-section">
               <div className="doc-section-label">
-                <div className="doc-number">06</div>
+                <div className="doc-number">07</div>
                 <h3>Promise Toasts</h3>
               </div>
               <div className="doc-section-content">
@@ -1152,7 +1179,7 @@ gooeyToast.success('Deployed', {
 
             <div className="doc-section">
               <div className="doc-section-label">
-                <div className="doc-number">07</div>
+                <div className="doc-number">08</div>
                 <h3>Timings</h3>
               </div>
               <div className="doc-section-content">
@@ -1175,7 +1202,7 @@ gooeyToast.success('Deployed', {
 
             <div className="doc-section">
               <div className="doc-section-label">
-                <div className="doc-number">08</div>
+                <div className="doc-number">09</div>
                 <h3>Toaster Props</h3>
               </div>
               <div className="doc-section-content">
@@ -1212,7 +1239,7 @@ gooeyToast.success('Deployed', {
 
             <div className="doc-section">
               <div className="doc-section-label">
-                <div className="doc-number">09</div>
+                <div className="doc-number">10</div>
                 <h3>Options</h3>
               </div>
               <div className="doc-section-content">
@@ -1247,7 +1274,7 @@ gooeyToast.success('Deployed', {
 
             <div className="doc-section">
               <div className="doc-section-label">
-                <div className="doc-number">10</div>
+                <div className="doc-number">11</div>
                 <h3>Methods</h3>
               </div>
               <div className="doc-section-content">
@@ -1297,7 +1324,7 @@ gooeyToast.update(id, {
 
             <div className="doc-section">
               <div className="doc-section-label">
-                <div className="doc-number">11</div>
+                <div className="doc-number">12</div>
                 <h3>Custom Styling</h3>
               </div>
               <div className="doc-section-content">
@@ -1340,7 +1367,7 @@ gooeyToast.update(id, {
             </div>
             <div className="doc-section">
               <div className="doc-section-label">
-                <div className="doc-number">12</div>
+                <div className="doc-number">13</div>
                 <h3>Spring Animation</h3>
               </div>
               <div className="doc-section-content">

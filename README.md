@@ -44,6 +44,24 @@ npx shadcn@latest add https://goey-toast.vercel.app/r/goey-toaster.json
 
 This installs a thin wrapper component at `components/ui/goey-toaster.tsx` and auto-installs the `goey-toast` and `framer-motion` packages.
 
+### AI Agents (Skill)
+
+goey-toast ships a bundled [Agent Skill](https://www.skills.sh/) (`SKILL.md`) so coding agents (Claude Code, Cursor, etc.) know how to install and use it correctly — the required `<GooeyToaster />` mount, the `styles.css` import, and the full API.
+
+Install from the skills.sh registry:
+
+```bash
+npx skills add anl331/goey-toast
+```
+
+Or copy the skill into your project from the package itself:
+
+```bash
+npx goey-toast add-skill            # -> .claude/skills/goey-toast/SKILL.md
+npx goey-toast add-skill --agents   # also append an AGENTS.md pointer
+npx goey-toast add-skill --dir .cursor/skills/goey-toast
+```
+
 ### Peer Dependencies
 
 goey-toast requires the following peer dependencies:
