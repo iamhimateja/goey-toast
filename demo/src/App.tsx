@@ -324,6 +324,22 @@ function App() {
 
           <div className="changelog-entry">
             <div className="changelog-version">
+              <span className="changelog-tag">v0.4.1</span>
+              <span className="changelog-date">Jun 8, 2026</span>
+            </div>
+            <div className="changelog-body">
+              <h4>Global Timestamp Config & Stack Hover Fixes</h4>
+              <ul>
+                <li>Global <code>showTimestamp</code> prop on <code>GooeyToaster</code> to toggle timestamps for all toasts (per-toast override still wins)</li>
+                <li>Fixed snap/flash when hovering a multi-toast stack — offsets now sync before paint for smooth eased motion</li>
+                <li>Expanded stack transitions honor <code>prefers-reduced-motion</code></li>
+                <li>Fixed toast title descenders (<code>g</code>, <code>y</code>, <code>p</code>, <code>q</code>) being clipped at the bottom</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="changelog-entry">
+            <div className="changelog-version">
               <span className="changelog-tag">v0.4.0</span>
               <span className="changelog-date">Mar 29, 2026</span>
             </div>
@@ -487,7 +503,7 @@ function App() {
           {/* Hero */}
           <div className="hero">
             <div className="hero-badge">
-              <span /> v0.4.0
+              <span /> v0.4.1
             </div>
             <h1 ref={heroTitleRef} className={heroLanding ? 'hero-title--landing' : ''}>gooey-toast <img src="/mascot.png" alt="mascot" className={`hero-mascot${heroLanding ? ' hero-mascot--landing' : ''}`} /></h1>
             <p className="hero-description">
